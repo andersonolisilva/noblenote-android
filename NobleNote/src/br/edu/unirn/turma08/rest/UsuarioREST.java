@@ -11,7 +11,7 @@ public class UsuarioREST extends WebService {
 
 	public static Usuario logar(String login, String senha) {
 
-		String urlTemplate = getUrl().concat(PATH) + "/logar?login=%s&senha=%s";
+		String urlTemplate = getUrl()+ PATH + "logar?login=%s&senha=%s";
 		String url = String.format(urlTemplate, login, senha);
 
 		RestTemplate restTemplate = new RestTemplate();
