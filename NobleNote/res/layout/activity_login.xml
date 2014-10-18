@@ -1,0 +1,71 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="br.edu.unirn.turma08.LoginActivity" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical" >
+
+        <EditText
+            android:id="@+id/txtLogin"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10pt"
+            android:ems="10"
+            android:fontFamily="Arial"
+            android:hint="Insira seu usuário" >
+
+            <requestFocus />
+        </EditText>
+
+        <EditText
+            android:id="@+id/txtSenha"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10pt"
+            android:ems="10"
+            android:fontFamily="Arial"
+            android:hint="Insira sua senha"
+            android:inputType="textPassword" />
+
+        <Button
+            android:id="@+id/btnLogar"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10pt"
+            android:onClick="logar"
+            android:text="Entrar" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/linkRecuperarSenha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Recuperar Senha"
+                android:textColor="#07c" />
+
+            <TextView
+                android:id="@+id/linkCadastrarUsuario"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:text="Novo Usuário"
+                android:textAlignment="gravity"
+                android:textColor="#07c" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>
