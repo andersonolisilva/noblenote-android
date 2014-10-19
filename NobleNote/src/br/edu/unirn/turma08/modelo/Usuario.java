@@ -3,7 +3,6 @@ package br.edu.unirn.turma08.modelo;
 import java.util.Collection;
 
 public class Usuario {
-	private static final long serialVersionUID = 1L;
 	private int id;
 	private String nome;
 	private String login;

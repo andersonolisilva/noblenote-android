@@ -29,6 +29,10 @@
             android:name=".ListaNotaActivity"
             android:label="@string/title_activity_lista_nota" >
         </activity>
+        <activity
+            android:name=".CadastrarUsuarioActivity"
+            android:label="@string/title_activity_cadastrar_usuario" >
+        </activity>
     </application>
 
 </manifest>

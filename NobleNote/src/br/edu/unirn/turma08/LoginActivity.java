@@ -1,20 +1,22 @@
 package br.edu.unirn.turma08;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.Toast;
 import br.edu.unirn.turma08.modelo.Usuario;
 import br.edu.unirn.turma08.rest.UsuarioREST;
 
 public class LoginActivity extends Activity {
 
 //	private static final String LOGIN_PREFERENCE = "login";
-	private Loading loading = new Loading();
+	public Loading loading = new Loading();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -31,16 +33,12 @@ public class LoginActivity extends Activity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.login, menu);
 		return true;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.action_settings) {
 			return true;
@@ -49,39 +47,66 @@ public class LoginActivity extends Activity {
 	}
 
 	public void logar(View v) {
-		loading.show(this, "Aguarde...");
-		
 		EditText txtLogin = (EditText) findViewById(R.id.txtLogin);
 		EditText txtSenha = (EditText) findViewById(R.id.txtSenha);
 
-		final String login = txtLogin.getText().toString();
-		final String senha = txtSenha.getText().toString();
-
+		String login = txtLogin.getText().toString();
+		String senha = txtSenha.getText().toString();
+		
+		if (!login.equals("") && !senha.equals("")) {
+			autenticar(login, senha);
+		}else{
+			Toast toast = Toast.makeText(getApplicationContext(), "Informe os campos de Usuario e senha", Toast.LENGTH_LONG);
+			toast.setGravity(Gravity.CENTER, 0, 0);
+			toast.show();
+		}
+	}
+	
+	private void autenticar(String login, String senha){
+		
+		final String userLogin = login;
+		final String userSenha = senha;
+		
 		AsyncTask<Void, Void, Usuario> task = new AsyncTask<Void, Void, Usuario>() {
+			
+			@Override
+			protected void onPreExecute(){
+				loading.show(LoginActivity.this, "Aguarde...");
+			}
 
 			@Override
 			protected Usuario doInBackground(Void... params) {
-				Usuario usuario = UsuarioREST.logar(login, senha);
-				//Usuario usuario = new Usuario();
+				Usuario usuario = UsuarioREST.logar(userLogin, userSenha);
 				return usuario;
 			}
 
 			@Override
 			protected void onPostExecute(Usuario usuario) {
-
-//				SharedPreferences settings = getPreferences(Activity.MODE_PRIVATE);
-//				SharedPreferences.Editor editor = settings.edit();
-//				editor.putString(LOGIN_PREFERENCE, login);
-//				editor.commit();
-
-//				Intent acao = new Intent(LoginActivity.this, ListaNotaActivity.class);
-//				startActivity(acao);
-				
-				loading.close();
-
+				if (usuario == null) {
+					Toast toast = Toast.makeText(getApplicationContext(), "Usuario ou senha inválida", Toast.LENGTH_LONG);
+					toast.setGravity(Gravity.CENTER, 0, 0);
+					toast.show();
+					loading.close();
+				}else{
+					Intent intent = new Intent(LoginActivity.this, ListaNotaActivity.class);
+					startActivity(intent);
+					finish();
+				}
 				super.onPostExecute(usuario);
 			}
 		};
 		task.execute(new Void[] {});
+	}
+	
+	public void novoUsuario(View v) {
+		loading.show(LoginActivity.this, "Aguarde...");
+		Intent intent = new Intent(LoginActivity.this, CadastrarUsuarioActivity.class);
+		startActivity(intent);
+	}
+	
+	public void recuperarSenha(){
+		Toast toast = Toast.makeText(getApplicationContext(), "Cenas do próximos capítulos...", Toast.LENGTH_LONG);
+		toast.setGravity(Gravity.CENTER, 0, 0);
+		toast.show();
 	}
 }

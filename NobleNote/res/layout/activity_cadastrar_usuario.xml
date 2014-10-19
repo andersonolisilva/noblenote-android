@@ -6,7 +6,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="br.edu.unirn.turma08.LoginActivity" >
+    tools:context="br.edu.unirn.turma08.CadastrarUsuarioActivity" >
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -16,21 +16,33 @@
         android:orientation="vertical" >
 
         <TextView
+            android:id="@+id/lblNome"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Nome:" />
+
+        <EditText
+            android:id="@+id/txtNome"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5pt"
+            android:ems="10" >
+
+            <requestFocus />
+        </EditText>
+
+        <TextView
             android:id="@+id/lblLogin"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Login:" />
+            android:text="Usuário:" />
 
         <EditText
             android:id="@+id/txtLogin"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5pt"
-            android:ems="10"
-            android:hint="Insira seu usuário" >
-
-            <requestFocus />
-        </EditText>
+            android:ems="10" />
 
         <TextView
             android:id="@+id/lblSenha"
@@ -44,33 +56,29 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="5pt"
             android:ems="10"
-            android:hint="Insira sua senha"
             android:inputType="textPassword" />
 
-        <Button
-            android:id="@+id/btnLogar"
+        <TextView
+            android:id="@+id/lblTelefone"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10pt"
-            android:onClick="logar"
-            android:text="Entrar" />
+            android:text="Telefone:" />
 
-        <Button
-            android:id="@+id/linkRecuperarSenha"
+        <EditText
+            android:id="@+id/txtTelefone"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:ems="10"
             android:layout_marginBottom="5pt"
-            android:onClick="recuperarSenha"
-            android:text="Recuperar Senha"
-            android:textColor="#07c" />
+            android:maxLength="10"
+            android:inputType="phone" />
 
         <Button
-            android:id="@+id/linkNovoUsuario"
+            android:id="@+id/btnEntrar"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:onClick="novoUsuario"
-            android:text="Novo Usuário"
-            android:textColor="#07c" />
+            android:onClick="cadastrarUsuario"
+            android:text="Cadastrar" />
     </LinearLayout>
 
 </RelativeLayout>
