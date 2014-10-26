@@ -74,7 +74,7 @@
             android:inputType="phone" />
 
         <Button
-            android:id="@+id/btnEntrar"
+            android:id="@+id/btnNovoUsuario"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:onClick="cadastrarUsuario"

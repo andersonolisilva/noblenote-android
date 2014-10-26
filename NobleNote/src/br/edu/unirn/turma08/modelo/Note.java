@@ -1,14 +1,13 @@
 package br.edu.unirn.turma08.modelo;
 
-import java.util.Calendar;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class Note {
 	private int id;
 	private String anotacao;
-	private boolean anotacaoPublica;
-	private Calendar dataAtualizacao;
-	private boolean modificada;
-	private boolean excluida;
+	private Date data;
 
 	public int getId() {
 		return id;
@@ -26,36 +25,12 @@ public class Note {
 		this.anotacao = anotacao;
 	}
 
-	public boolean isAnotacaoPublica() {
-		return anotacaoPublica;
+	public Date getData() {
+		return data;
 	}
 
-	public void setAnotacaoPublica(boolean anotacaoPublica) {
-		this.anotacaoPublica = anotacaoPublica;
-	}
-
-	public Calendar getDataAtualizacao() {
-		return dataAtualizacao;
-	}
-
-	public void setDataAtualizacao(Calendar dataAtualizacao) {
-		this.dataAtualizacao = dataAtualizacao;
-	}
-
-	public boolean isModificada() {
-		return modificada;
-	}
-
-	public void setModificada(boolean modificada) {
-		this.modificada = modificada;
-	}
-
-	public boolean isExcluida() {
-		return excluida;
-	}
-
-	public void setExcluida(boolean excluida) {
-		this.excluida = excluida;
+	public void setData(Date data) {
+		this.data = data;
 	}
 
 }

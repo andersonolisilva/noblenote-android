@@ -3,9 +3,15 @@
     tools:context="br.edu.unirn.turma08.ListaNotaActivity" >
 
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/menuAlterarSenha"
         android:orderInCategory="100"
         android:showAsAction="never"
-        android:title="@string/action_settings"/>
+        android:title="Alterar Senha"/>
+    
+    <item
+        android:id="@+id/menuSair"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="Sair"/>
 
 </menu>

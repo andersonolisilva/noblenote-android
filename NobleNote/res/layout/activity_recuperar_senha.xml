@@ -6,7 +6,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="br.edu.unirn.turma08.LoginActivity" >
+    tools:context="br.edu.unirn.turma08.RecuperarSenhaActivity" >
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -19,58 +19,42 @@
             android:id="@+id/lblLogin"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Login:" />
+            android:text="Usuário:" />
 
         <EditText
             android:id="@+id/txtLogin"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5pt"
-            android:ems="10"
-            android:hint="Insira seu usuário" >
-
-            <requestFocus />
-        </EditText>
+            android:ems="10" />
 
         <TextView
-            android:id="@+id/lblSenha"
+            android:id="@+id/lblTelefone"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Senha:" />
+            android:text="Telefone:" />
 
         <EditText
-            android:id="@+id/txtSenha"
+            android:id="@+id/txtTelefone"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5pt"
             android:ems="10"
-            android:hint="Insira sua senha"
-            android:inputType="textPassword" />
+            android:layout_marginBottom="5pt"
+            android:maxLength="10"
+            android:inputType="phone" />
 
         <Button
-            android:id="@+id/btnLogar"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10pt"
-            android:onClick="logar"
-            android:text="Entrar" />
-
-        <Button
-            android:id="@+id/btnNovo"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:onClick="novoUsuario"
-            android:text="Novo Usuário"
-            android:textColor="#07c" />
-        
-        <Button
-            android:id="@+id/btnSenha"
+            android:id="@+id/btnRecuperarSenha"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:onClick="recuperarSenha"
-            android:text="Recuperar Senha"
-            android:textColor="#07c" />
+            android:text="Recuperar" />
         
+        <TextView
+            android:id="@+id/respostaSenha"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#f00" />
     </LinearLayout>
 
 </RelativeLayout>
