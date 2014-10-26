@@ -18,13 +18,7 @@ public class UsuarioREST extends WebService {
 		RestTemplate restTemplate = new RestTemplate();
 		restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
 		
-		Usuario u = null;
-		try {
-			u = restTemplate.getForObject(url, Usuario.class);
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-		return u;
+		return restTemplate.getForObject(url, Usuario.class);
 	}
 	
 	public static Usuario cadastrar(Usuario usuario) {
@@ -38,12 +32,23 @@ public class UsuarioREST extends WebService {
 	}
 
 	public static Usuario recuperar(String login, String telefone) {
-		String urlTemplate = getUrl() + PATH + "recuperar";
+		String urlTemplate = getUrl() + PATH + "recuperarsenha";
 		String url = String.format(urlTemplate, login, telefone);
 
 		RestTemplate restTemplate = new RestTemplate();
 		restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
 
+		return restTemplate.getForObject(url, Usuario.class);
+	}
+
+	public static Usuario alterarSenha(String login, String senhaAtual, String senhaNova) {
+
+		String urlTemplate = getUrl() + PATH + "alterarsenha?login=%s&senha=%s&novasenha=%s";
+		String url = String.format(urlTemplate, login, senhaAtual, senhaNova);
+
+		RestTemplate restTemplate = new RestTemplate();
+		restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+		
 		return restTemplate.getForObject(url, Usuario.class);
 	}
 

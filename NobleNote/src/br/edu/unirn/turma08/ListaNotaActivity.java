@@ -1,66 +1,57 @@
 package br.edu.unirn.turma08;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import br.edu.unirn.turma08.dao.NoteDAO;
+import br.edu.unirn.turma08.modelo.Note;
 
 public class ListaNotaActivity extends Activity {
 
 	private int idUsuarioLogado;
-	private static final String USUARIO_ID = "usuario_id";
-	private static final String USUARIO_LOGIN = "usuario_login";
-	private static final String USUARIO_NOME = "usuario_nome";
+	private static final String USUARIO = "Usuario";
+	private static final String USUARIO_ID = "Usuario_Id";
+	private static final String USUARIO_LOGIN = "Usuario_Login";
+	private static final String USUARIO_NOME = "Usuario_Nome";
 	private Loading loading = new Loading();
 
 	private NoteAdapter adapter;
 
 	private NoteDAO noteDAO;
+	
+	SharedPreferences sharedPreferences;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_lista_nota);
 
-		SharedPreferences settings = getPreferences(Activity.MODE_PRIVATE);
-		idUsuarioLogado = settings.getInt(USUARIO_ID, 0);
-		// String loginUsuarioLogado = settings.getString(USUARIO_LOGIN, "");
-		// String nomeUsuarioLogado = settings.getString(USUARIO_NOME, "");
+		sharedPreferences = getSharedPreferences(USUARIO, Context.MODE_PRIVATE);
+		idUsuarioLogado = sharedPreferences.getInt(USUARIO_ID, 0);
+		String loginUsuarioLogado = sharedPreferences.getString(USUARIO_LOGIN, "");
+		String nomeUsuarioLogado = sharedPreferences.getString(USUARIO_NOME, "");
 
-		if (idUsuarioLogado != 0) {
+		if (idUsuarioLogado > 0) {
+			noteDAO = new NoteDAO(this);
+			noteDAO.open();
+			popularNotas(idUsuarioLogado);
+			noteDAO.close();
+		}else{
 			logout();
 		}
-
-		noteDAO = new NoteDAO(this);
-		noteDAO.open();
-		
-		noteDAO.create("Nota 1");
-
-		popularNotas(idUsuarioLogado);
-
 	}
 
 	@Override
 	protected void onStop() {
-		// loading.close();
 		super.onStop();
-	}
-
-	@Override
-	protected void onResume() {
-		// noteDAO.open();
-		popularNotas(idUsuarioLogado);
-		super.onResume();
-	}
-
-	@Override
-	protected void onPause() {
-		// noteDAO.close();
-		super.onPause();
+		loading.close();
 	}
 
 	@Override
@@ -78,26 +69,47 @@ public class ListaNotaActivity extends Activity {
 		}
 		if (id == R.id.menuAlterarSenha) {
 			loading.show(this, "Aguarde...");
-			logout();
+			senha();
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	public void novaNota(View v){
+		loading.show(ListaNotaActivity.this, "Aguarde...");
+		Intent intent = new Intent(ListaNotaActivity.this, NotaActivity.class);
+		startActivity(intent);
 	}
 
 	private void popularNotas(int id) {
 		ListView lista = (ListView) findViewById(R.id.listaNotas);
 		adapter = new NoteAdapter(this, noteDAO.getAllByUser(id));
 		lista.setAdapter(adapter);
+		
+		lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
+				loading.show(ListaNotaActivity.this, "Aguarde...");
+				
+				Note note = (Note) parent.getItemAtPosition(position);
+				Intent intent = new Intent(ListaNotaActivity.this, NotaActivity.class);
+				intent.putExtra("NotaSelecionada", note);
+				
+				startActivity(intent);
+			}
+		});
 	}
 
 	private void logout() {
-		SharedPreferences settings = getPreferences(Activity.MODE_PRIVATE);
-		SharedPreferences.Editor editor = settings.edit();
-		editor.putInt(USUARIO_ID, 0);
-		editor.putString(USUARIO_LOGIN, "");
-		editor.putString(USUARIO_NOME, "");
-		editor.commit();
-
+		sharedPreferences.edit().clear().commit();
 		startActivity(new Intent(this, LoginActivity.class));
 		finish();
 	}
+
+	private void senha() {
+		startActivity(new Intent(this, AlterarSenhaActivity.class));
+		finish();
+	}
+	
+	
 }

@@ -32,8 +32,9 @@ public class NoteDAO {
 		dbHelper.close();
 	}
 
-	public void create(String descricao) {
+	public void create(int idUsuario, String descricao) {
 		ContentValues values = new ContentValues();
+		values.put(DataBaseDAO.NOTE_USUARIO, idUsuario);
 		values.put(DataBaseDAO.NOTE_DESCRICAO, descricao);
 		values.put(DataBaseDAO.NOTE_DATA, System.currentTimeMillis());
 		database.insert(DataBaseDAO.TBL_NOTE, null, values);
@@ -47,15 +48,27 @@ public class NoteDAO {
 	public void update(Note note) {
 		ContentValues values = new ContentValues();
 		values.put(DataBaseDAO.NOTE_DESCRICAO, note.getAnotacao());
+		values.put(DataBaseDAO.NOTE_DATA, System.currentTimeMillis());
 		database.update(DataBaseDAO.TBL_NOTE, values, DataBaseDAO.NOTE_ID
 				+ " = " + note.getId(), null);
+	}
+	
+	public Note findById(int id){
+		Note note = null;
+		Cursor cursor = database.query(DataBaseDAO.TBL_NOTE, colunas, DataBaseDAO.NOTE_ID + " = "+ id, null, null, null, null);
+		if (cursor.moveToFirst()) {
+			note = new Note();
+			note.setId(cursor.getInt(0));
+			note.setAnotacao(cursor.getString(1));
+			note.setData(new Date(cursor.getLong(2)));
+		}
+		return note;
 	}
 
 	public List<Note> getAllByUser(int idUsuario) {
 		List<Note> notas = new ArrayList<Note>();
 
-		Cursor cursor = database.query(DataBaseDAO.TBL_NOTE, colunas, DataBaseDAO.NOTE_USUARIO + " = "+ idUsuario,
-				null, null, null, DataBaseDAO.NOTE_DATA);
+		Cursor cursor = database.query(DataBaseDAO.TBL_NOTE, colunas, DataBaseDAO.NOTE_USUARIO + " = "+ idUsuario, null, null, null, DataBaseDAO.NOTE_DATA+" DESC");
 		cursor.moveToFirst();
 		while (!cursor.isAfterLast()) {
 			Note note = cursorToNote(cursor);

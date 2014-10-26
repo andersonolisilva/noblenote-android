@@ -28,15 +28,23 @@
         </activity>
         <activity
             android:name=".ListaNotaActivity"
-            android:label="@string/title_activity_lista_nota" >
+            android:label="Minhas Notas" >
+        </activity>
+        <activity
+            android:name=".NotaActivity"
+            android:label="Nota" >
         </activity>
         <activity
             android:name=".CadastrarUsuarioActivity"
-            android:label="@string/title_activity_cadastrar_usuario" >
+            android:label="Novo Usuário" >
         </activity>
         <activity
             android:name=".RecuperarSenhaActivity"
-            android:label="@string/title_activity_recuperar_senha" >
+            android:label="Recuperar Senha" >
+        </activity>
+        <activity
+            android:name=".AlterarSenhaActivity"
+            android:label="Recuperar Senha" >
         </activity>
     </application>
 

@@ -1,40 +1,40 @@
 package br.edu.unirn.turma08;
 
-import java.util.Date;
-
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 import br.edu.unirn.turma08.modelo.Usuario;
 import br.edu.unirn.turma08.rest.UsuarioREST;
 
 public class LoginActivity extends Activity {
 
-	private static final String USUARIO_ID = "usuario_id";
-	private static final String USUARIO_LOGIN = "usuario_login";
-	private static final String USUARIO_NOME = "usuario_nome";
+	private static final String USUARIO = "Usuario";
+	private static final String USUARIO_ID = "Usuario_Id";
+	private static final String USUARIO_LOGIN = "Usuario_Login";
+	private static final String USUARIO_NOME = "Usuario_Nome";
 	private Loading loading = new Loading();
+	
+	SharedPreferences sharedPreferences;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
-		
-//		TextView textLogin = (TextView) findViewById(R.id.txtLogin);
 
-		SharedPreferences settings = getPreferences(Activity.MODE_PRIVATE);
-		int idUsuarioLogado = settings.getInt(USUARIO_ID, 0);
-		// String loginUsuarioLogado = settings.getString(USUARIO_LOGIN, "");
-		// String nomeUsuarioLogado = settings.getString(USUARIO_NOME, "");
+		sharedPreferences = getSharedPreferences(USUARIO, Context.MODE_PRIVATE);
+		int idUsuarioLogado = sharedPreferences.getInt(USUARIO_ID, 0);
+		String loginUsuarioLogado = sharedPreferences.getString(USUARIO_LOGIN, "");
+		String nomeUsuarioLogado = sharedPreferences.getString(USUARIO_NOME, "");
 
-		if (idUsuarioLogado != 0) {
+		if (idUsuarioLogado > 0) {
 			telaInicial();
 		}
 	}
@@ -82,13 +82,13 @@ public class LoginActivity extends Activity {
 			@Override
 			protected void onPostExecute(Usuario usuario) {
 				if (usuario == null) {
-					Toast toast = Toast.makeText(getApplicationContext(), "Usuario ou Senha inválida", Toast.LENGTH_LONG);
+					Toast toast = Toast.makeText(getApplicationContext(),
+							"Usuario ou Senha inválida", Toast.LENGTH_LONG);
 					toast.setGravity(Gravity.CENTER, 0, 0);
 					toast.show();
 					loading.close();
 				} else {
-					SharedPreferences settings = getPreferences(Activity.MODE_PRIVATE);
-					SharedPreferences.Editor editor = settings.edit();
+					Editor editor = sharedPreferences.edit();
 					editor.putInt(USUARIO_ID, usuario.getId());
 					editor.putString(USUARIO_LOGIN, usuario.getLogin());
 					editor.putString(USUARIO_NOME, usuario.getNome());

@@ -12,6 +12,7 @@ public class Loading {
 		if (progress == null) {
 			progress = new ProgressDialog(context);
 			progress.setTitle("");
+			progress.setCancelable(false);
 			progress.setMessage(message);
 		}
 		progress.show();
